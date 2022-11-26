@@ -1,0 +1,54 @@
+data("AirPassengers")
+ts.plot(AirPassengers, xlab="Year", ylab="Number of Passengers", main="Monthly totals of international airline passengers, 1949-1960")
+abline(reg=lm(AirPassengers~time(AirPassengers)))
+#debemos determinar la autocorrelacion 
+acf(AirPassengers,lag.max = 1, plot = FALSE)
+#arima viene de AUTOREGRESSIVE INTEGRATED MOVING AVERAGES
+AR <- arima(AirPassengers, order = c(1,0,0))
+print(AR)
+ts.plot(AirPassengers)
+AR_fit <- AirPassengers - residuals(AR)
+points(AR_fit, type = "l", col = 2, lty = 2)
+predict_AR <- predict(AR)
+predict_AR$pred[1]
+predict(AR, n.ahead = 10)
+ts.plot(AirPassengers, xlim = c(1949, 1961))
+AR_forecast <- predict(AR, n.ahead = 10)$pred
+AR_forecast_se <- predict(AR, n.ahead = 10)$se
+points(AR_forecast, type = "l", col = 2)
+points(AR_forecast - 2*AR_forecast_se, type = "l", col = 2, lty = 2)
+points(AR_forecast + 2*AR_forecast_se, type = "l", col = 2, lty = 2)
+
+#MODELO MA MOVING AVERAGES
+#AUTOARIMA 
+#LIBRERÍA FORECAST 
+MA <- arima(AirPassengers, order = c(0,0,1))
+print(MA)
+ts.plot(AirPassengers)
+MA_fit <- AirPassengers - resid(MA)
+points(MA_fit, type = "l", col = 2, lty = 2)
+predict_MA <- predict(MA)
+predict_MA$pred[1]
+ts.plot(AirPassengers, xlim = c(1949, 1961))
+MA_forecasts <- predict(MA, n.ahead = 10)$pred
+MA_forecast_se <- predict(MA, n.ahead = 10)$se
+points(MA_forecasts, type = "l", col = 2)
+points(MA_forecasts - 2*MA_forecast_se, type = "l", col = 2, lty = 2)
+points(MA_forecasts + 2*MA_forecast_se, type = "l", col = 2, lty = 2)
+
+
+#CÓMO ELEGIR ENTRE UN MODELO AR O UN MA 
+#SE HACE ENCONTRANDO CORRELACIÓN ENTRE LOS FIT DE AMBOS MODELOS 
+cor(AR_fit, MA_fit)
+#LUEGO COMPARAMOS EL CRITERIO DE AKAIKE (AIC)
+AIC(AR)
+AIC(MA)
+#TAMBIÉN UTILIZAMOS EL CRITERIO DE INFORMACION BAYESIANO (BIC)
+BIC(AR)
+BIC(MA)
+#LOS VALORES MÁS BAJOS DE AMBOS CRITERIOS INDICAN QUÉ 
+#MODELO ES MEJOR 
+#EN ESTE CASO, COMO AMBOS CRITERIOS TIENEN UN MENOR VALOR PARA 
+#EL MODELO AR, Y POR LO TANTO ESTE ES EL QUE ES MEJOR 
+library(forecast)
+auto.arima(AirPassengers)
