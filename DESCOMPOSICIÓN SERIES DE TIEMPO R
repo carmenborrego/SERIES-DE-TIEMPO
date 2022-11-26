@@ -1,0 +1,35 @@
+library(forecast)
+data(lynx)
+class(lynx)
+plot(lynx)
+
+par(mfrow=c(2,1),cex=1/0.83)
+require(forecast)
+plot(AirPassengers)
+seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
+
+
+library(seasonal)
+plot(AirPassengers)
+sa_series <- seas(AirPassengers,x11 = "")
+plot(AirPassengers)
+lines(final(sa_series),col=2)
+
+#descomposición de una serie de tiempo en partes 
+library(tseries)
+library(forecast)
+data(AirPassengers)
+AP <- AirPassengers
+class(AP)
+sum(is.na(AP))
+frequency(AP)
+cycle(AP)
+summary(AP)
+plot(AP,xlab="Date", ylab = "Passenger numbers (1000's)",
+     main="Air Passenger numbers from 1949 to 1961")
+autoplot(AP) + labs(x ="Date", y = "Passenger numbers (1000's)", title="Air Passengers from 1949 to 1961") 
+boxplot(AP~cycle(AP),xlab="Date", ylab = "Passenger Numbers (1000's)" ,main ="Monthly Air Passengers Boxplot from 1949 to 1961")
+decomposeAP <- decompose(AP,"multiplicative")
+autoplot(decomposeAP)
+adf.test(AP) 
+
