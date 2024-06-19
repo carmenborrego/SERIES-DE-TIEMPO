@@ -1,0 +1,47 @@
+# Instalación y carga del paquete necesario
+#install.packages("astsa")
+library(astsa)
+
+# Generación de dos series de tiempo sintéticas
+set.seed(123)
+n <- 1024
+t <- 1:n
+
+# Serie de tiempo 1: combinación de diferentes frecuencias
+series1 <- 2 * sin(2 * pi * t / 50) + 3 * sin(2 * pi * t / 100) + rnorm(n, mean = 0, sd = 1)
+
+# Serie de tiempo 2: combinación de diferentes frecuencias y una componente relacionada con series1
+series2 <- 3 * sin(2 * pi * t / 50) + 2 * sin(2 * pi * t / 200) + 0.5 * series1 + rnorm(n, mean = 0, sd = 1)
+
+# Creación de objetos de series de tiempo
+ts_series1 <- ts(series1)
+ts_series2 <- ts(series2)
+
+# Gráfico de las series de tiempo
+par(mfrow = c(2, 1))
+plot(ts_series1, main = "Serie de Tiempo 1", ylab = "Valor", xlab = "Tiempo")
+plot(ts_series2, main = "Serie de Tiempo 2", ylab = "Valor", xlab = "Tiempo")
+
+
+# Cálculo del espectro cruzado
+cross_spectrum <- spec.pgram(cbind(series1, series2), spans = c(3, 3), taper = 0.1, plot = FALSE)
+
+# Gráficos del espectro cruzado
+par(mfrow = c(3, 1))
+
+# Coherencia
+plot(cross_spectrum$freq, cross_spectrum$coh, type = "l", col = "blue", 
+     main = "Coherencia", ylab = "Coherencia", xlab = "Frecuencia")
+
+# Fase
+plot(cross_spectrum$freq, cross_spectrum$phase, type = "l", col = "red", 
+     main = "Fase", ylab = "Fase (radianes)", xlab = "Frecuencia")
+
+# Espectros individuales y cruzado
+plot(cross_spectrum$freq, Mod(cross_spectrum$spec[,1]), type = "l", col = "black", 
+     main = "Espectros Individuales y Cruzado", ylab = "Espectro", xlab = "Frecuencia")
+lines(cross_spectrum$freq, Mod(cross_spectrum$spec[,2]), col = "green")
+lines(cross_spectrum$freq, Mod(cross_spectrum$spec[,3]), col = "purple")
+
+legend("topright", legend = c("Serie 1", "Serie 2", "Espectro Cruzado"), col = c("black", "green", "purple"), lty = 1)
+
