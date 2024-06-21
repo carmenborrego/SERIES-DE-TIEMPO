@@ -1,0 +1,160 @@
+#obtención de datos diarios de google trends 
+#de acuerdo con lo porpuesto en el paper donde se desarrolla 
+#la librería trendecon
+
+library(trendecon)
+library(tsbox)
+
+hospital=ts_gtrends_mwd("hospital", geo = "MX",
+                        from="2020-02-15", to="2020-12-31")
+ts_plot(hospital, title="Daily searches for Hospital")
+
+farmacia=ts_gtrends_mwd("farmacia", geo = "MX",
+                        from="2020-02-15", to="2020-12-31")
+
+ts_plot(farmacia, title="Daily searches for Farmacia")
+
+cine=ts_gtrends_mwd("cine", geo = "MX",
+                        from="2020-02-15", to="2020-12-31")
+
+ts_plot(cine, title="Daily searches for Cine")
+
+dentista=ts_gtrends_mwd("dentista", geo = "MX",
+                        from="2020-02-15", to="2020-12-31")
+
+ts_plot(dentista, title="Daily searches for Dentista")
+
+doctor=ts_gtrends_mwd("doctor", geo = "MX",
+                        from="2020-02-15", to="2020-12-31")
+
+ts_plot(doctor, title="Daily searches for Doctor")
+
+restaurante=ts_gtrends_mwd("restaurante", geo = "MX",
+                      from="2020-02-15", to="2020-12-31")
+
+ts_plot(restaurante, title="Daily searches for Restaurante")
+
+comida_rapida=ts_gtrends_mwd("comida rapida", geo = "MX",
+                      from="2020-02-15", to="2020-12-31")
+
+ts_plot(comida_rapida, title="Daily searches for Comida Rapida")
+
+gasolinera=ts_gtrends_mwd("gasolinera", geo = "MX",
+                      from="2020-02-15", to="2020-12-31")
+
+ts_plot(gasolinera, title="Daily searches for Gasolinera")
+
+estacionamiento=ts_gtrends_mwd("estacionamiento", geo = "MX",
+                          from="2020-02-15", to="2020-12-31")
+
+ts_plot(estacionamiento, title="Daily searches for Estacionamiento")
+
+hotel=ts_gtrends_mwd("hotel", geo = "MX",
+                               from="2020-02-15", to="2020-12-31")
+
+ts_plot(hotel, title="Daily searches for Hotel")
+
+avion=ts_gtrends_mwd("avion", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(avion, title="Daily searches for Avion")
+
+vuelo=ts_gtrends_mwd("vuelo", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(vuelo, title="Daily searches for Vuelo")
+
+carretera=ts_gtrends_mwd("carretera", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(carretera, title="Daily searches for Carretera")
+
+camion=ts_gtrends_mwd("camion", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(camion, title="Daily searches for Camion")
+
+#a partir de aquí no se han cargado los datos 
+
+airbnb=ts_gtrends_mwd("airbnb", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(airbnb, title="Daily searches for Airbnb")
+
+renta_auto=ts_gtrends_mwd("renta auto", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(renta_auto, title="Daily searches for Renta Auto")
+
+teatro=ts_gtrends_mwd("teatro", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(teatro, title="Daily searches for Teatro")
+
+concierto=ts_gtrends_mwd("concierto", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(concierto, title="Daily searches for Teatro")
+
+uber_eats=ts_gtrends_mwd("uber eats", geo = "MX",
+                     from="2020-02-15", to="2020-12-31")
+
+ts_plot(uber_eats, title="Daily searches for Uber Eats")
+
+rappi=ts_gtrends_mwd("rappi", geo = "MX",
+                         from="2020-02-15", to="2020-12-31")
+
+ts_plot(rappi, title="Daily searches for Uber Rappi")
+
+supermercado=ts_gtrends_mwd("supermercado", geo = "MX",
+                         from="2020-02-15", to="2020-12-31")
+
+ts_plot(supermercado, title="Daily searches for Supermercado")
+
+uber_eats=ts_gtrends_mwd("uber eats", geo = "MX",
+                         from="2020-02-15", to="2020-12-31")
+
+ts_plot(uber_eats, title="Daily searches for Uber Eats")
+
+autopista=ts_gtrends_mwd("autopista", geo = "MX",
+                         from="2020-02-15", to="2020-12-31")
+
+ts_plot(autopista, title="Daily searches for Autopista")
+
+uber=ts_gtrends_mwd("uber", geo = "MX",
+                         from="2020-02-15", to="2020-12-31")
+
+ts_plot(uber, title="Daily searches for Uber")
+
+autobus=ts_gtrends_mwd("autobus", geo="MX", 
+                       from="2020-02-15", to="2020-12-31")
+ts_plot(uber, title="Daily searches for Uber")
+
+
+#para pegar todas las variables resultantes de google trends
+#se considera pegar en un solo data frame todos los 
+#google trends ya descargados para garantizar la repetibilidad 
+#ya que estar descargando cada vez es lento y puede que en algún 
+#momento no se permita descargar más 
+#primero se llama a la libreria tidyverse
+#luego se hace una lista con todos los df que se vayan a pegar
+#después se pegan los df 
+#se agregan conforme se estén obteniendo los gt que faltan 
+library(tidyverse)
+lista=list(airbnb, autobus, autopista, avion, camion, carretera, 
+           cine, comida_rapida, concierto,
+           dentista, doctor, estacionamiento, farmacia, gasolinera, 
+           hospital, hotel, rappi, renta_auto, restaurante, 
+           supermercado, teatro, uber, uber_eats, vuelo)
+
+
+lista %>% reduce(full_join, by='time')
+class(lista)
+
+#ahora se guarda la lista en un archivo de excel 
+library(openxlsx)
+archivo=write.xlsx(x=lista, file="trends.xlsx")
+class(archivo)
+#para saber en qué directorio se guardó el archivo 
+current_directory <- getwd()
+print(current_directory)
