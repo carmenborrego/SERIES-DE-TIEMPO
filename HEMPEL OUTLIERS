@@ -1,0 +1,6 @@
+lower_bound <- median(GTDESESTACIONALIZDAS$`Comida corrida`) - 3 * mad(GTDESESTACIONALIZDAS$`Comida corrida`, constant = 1)
+lower_bound
+upper_bound <- median(GTDESESTACIONALIZDAS$`Comida corrida`) + 3 * mad(GTDESESTACIONALIZDAS$`Comida corrida`, constant = 1)
+upper_bound
+outlier_ind <- which(GTDESESTACIONALIZDAS$`Comida corrida` < lower_bound | GTDESESTACIONALIZDAS$`Comida corrida` > upper_bound)
+outlier_ind
