@@ -1,0 +1,6 @@
+library(bestNormalize)
+montos_trans=lapply(MONTOSDESESTACIONALIZADOS, bestNormalize)
+agencias_trans=bestNormalize(MONTOSDESESTACIONALIZADOS$Agencias)
+plot.default(agencias_trans$x.t, type="l")
+shapiro.test(agencias_trans$x.t)
+boxplot(agencias_trans$x.t)
